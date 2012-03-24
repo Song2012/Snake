@@ -23,7 +23,40 @@ const int m = 20;
 const int n = 20;
 vector<vector<string>> game;
 
+typedef struct snake {
+	int x,y;
+	struct snake *pres;
+	struct snake *next;
+}snake;
+
+snake *head;
+snake *tail;
+
+void add_head(int a,int b) {
+	snake s;
+	s.x = a;
+	s.y = b;
+	snake *p = &s;
+	if(head == NULL) {
+		p->pres = NULL;
+		p->next = NULL;
+		head = p;
+		tail = p;
+
+
+	}
+	else {
+		snake *tmp = head;
+		head = p;
+		head->pres = NULL;
+		head->next = tmp;
+		tmp->pres = head;
+	}
+}
+
+
 void init() {
+	head = tail = NULL;
 	for(int i = 0 ; i != m ; ++i) {
 		game.push_back(vector<string>(n));
 		for(int j = 0 ; j != n ; ++j) {
