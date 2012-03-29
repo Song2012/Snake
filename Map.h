@@ -18,17 +18,19 @@
 
 #ifndef __MAP_H__
 #define __MAP_H__
-
+#include <string>
+using std::string;
+#define M 20
+#define N 20
 class Map {
 
 	public:
 		Map();
 		~Map();
-		print();
+		void print();
 	private:
-		const size_t M = 20;
-		const size_t N = 20;
 		string map[M][N];
-}
+};
+#endif
 
 

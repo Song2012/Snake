@@ -1,8 +1,25 @@
 EXE = *.exe *.pdb *.suo *.ilk
-OBJ = *.obj
+OBJS = *.OBJ
+OBJ = main.obj map.obj 
+FLAGS = \link 
+LIBS = map.lib snake.lib
+
+all : main.exe
+
+main.exe : $(OBJ)
+
+map.obj : map.h
+
+
+%.exe :
+	link /out:$@ $^
+
+$(OBJ) : %.obj : %.cpp
+	cl /c $<
+	
 
 clear:
-	-del $(EXE) $(OBJ)
+	-del $(EXE) $(OBJS)
 
 push:
 	git push origin master

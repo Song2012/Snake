@@ -18,25 +18,31 @@
 #ifndef __SNAKE_H__
 #define __SNAKE_H__
 #include <string>
+using std::string;
 
 class SnakeBody {
 	public:
 		SnakeBody(int x,int y,string body = "#");
 		SnakeBody();
+		string getBody();
 	private:
 		int x;
 		int y;
 		string body;
+		SnakeBody *pres;
+		SnakeBody *next;
 };
 
 class Snake {
 	public:
 		Snake();
 		~Snake();
-		addHead(int x , int y , string body);
-		addHead(int x , int y);
-		delTail();
-		print();
+		void addHead(int x , int y
+				, string body);
+		void addHead(int x , int y);
+		void delTail();
+		void print();
+		void move();
 	private:
 		SnakeBody *head;
 		SnakeBody *tail;
