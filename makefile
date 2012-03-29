@@ -22,4 +22,4 @@ clear:
 	-del $(EXE) $(OBJS)
 
 push:
-	git push origin master
+	push.bat
