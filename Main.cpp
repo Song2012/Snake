@@ -16,9 +16,15 @@
  * =====================================================================================
  */
 #include "Map.h"
+#include "Snake.h"
 int main(void) {
 	Map *map = new Map();
 	map->print();
+	Snake *snake =  new Snake();
+	while(true) {
+		snake->move();
+		snake->print();		
+	}
 	delete map;
 	map = 0;
 }

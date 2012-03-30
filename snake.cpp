@@ -34,6 +34,23 @@ string SnakeBody::getBody() {
 	return body;
 }
 
+SnakeBody* SnakeBody::getPres() {
+	return pres;
+}
+
+SnakeBody* SnakeBody::getNext() {
+	return next;
+}
+
+void SnakeBody::setPres(SnakeBody *pres) {
+	this->pres = pres;
+}
+
+void SnakeBody::setNext(SnakeBody *next) {
+	this->next = next;
+}
+
+
 Snake::Snake() {
 	head = tail = NULL;
 	addHead(4,5);
