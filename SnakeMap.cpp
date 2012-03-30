@@ -16,11 +16,11 @@
  * =====================================================================================
  */
 
-#include "Map.h"
+#include "SnakeMap.h"
 #include <iostream>
 using namespace std;
 
-Map::Map() {
+SnakeMap::SnakeMap() {
 	for(int i = 0 ; i != M ; ++i) {
 		for(int j = 0 ; j != N ; ++j) {
 			if(i == 0 || i == M - 1 || j == 0 ||j == N - 1) {
@@ -35,11 +35,11 @@ Map::Map() {
 
 }
 
-Map::~Map() {
+SnakeMap::~SnakeMap() {
 
 }
 
-void Map::print() {
+void SnakeMap::print() {
 
 	for(int i = 0 ; i != M ; ++i) {
 		for(int j = 0 ; j != N ; ++j) {

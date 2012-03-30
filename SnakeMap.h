@@ -16,18 +16,26 @@
  * =====================================================================================
  */
 
-#ifndef __MAP_H__
-#define __MAP_H__
+#ifndef __S_MAP_H__
+#define __S_MAP_H__
 #include <string>
 using std::string;
 #define M 20
 #define N 20
-class Map {
+class SnakeMap {
 
 	public:
-		Map();
-		~Map();
+		SnakeMap();
+		~SnakeMap();
 		void print();
+		// left border
+		static const size_t LB = 0;
+		// right border
+		static const size_t RB = N*2 - 2;
+		// upper border
+		static const size_t UB = 0; 
+		// nether border
+		static const size_t DB = M;
 	private:
 		string map[M][N];
 };

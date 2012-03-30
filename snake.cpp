@@ -16,8 +16,9 @@
  * =====================================================================================
  */
 #include "Snake.h"
-#include <string>
+#include <iostream>
 using std::string;
+using std::cout;
 
 SnakeBody::SnakeBody(int x,int y,string body) {
 	this->x = x;
@@ -50,13 +51,30 @@ void SnakeBody::setNext(SnakeBody *next) {
 	this->next = next;
 }
 
+int SnakeBody::getX() {
+	return x;
+}
 
-Snake::Snake() {
+int SnakeBody::getY() {
+	return y;
+}
+
+void SnakeBody::setX(int x) {
+	this->x = x;
+}
+
+void SnakeBody::setY(int y) {
+	this->y = y;
+}
+
+
+Snake::Snake(SnakeMap *map) {
 	head = tail = NULL;
 	addHead(4,5);
 	addHead(4,6);
 	addHead(4,7);
 	point = R;
+	this->map = map;
 }
 
 Snake::~Snake() {
@@ -68,12 +86,12 @@ void Snake::addHead(int x,int y,string body) {
 	SnakeBody *newbody = new SnakeBody(x,y,body); 
 	if(head == NULL) {
 		head = tail = newbody;
-		head->pres = NULL;
-		tail->next = NULL;
+		head->setPres(NULL);
+		head->setNext(NULL);
 	}
 	else {
-		head->pres = newbody;
-		newbody->next = head;
+		head->setPres(newbody);
+		newbody->setNext(head);
 		head = newbody;
 	}
 }
@@ -84,10 +102,12 @@ void Snake::addHead(int x , int y) {
 	SnakeBody *newbody = new SnakeBody(x,y);
 	if(head == NULL) {
 		head = tail = newbody;
+		head->setPres(NULL);
+		head->setNext(NULL);
 	}
 	else {
-		head->pres = newbody;
-		newbody->next = head;
+		head->setPres(newbody);
+		newbody->setNext(head);
 		head = newbody;
 	}
 
@@ -95,8 +115,10 @@ void Snake::addHead(int x , int y) {
 
 void Snake::delTail() {
 	SnakeBody *p = tail;
-	tail = tail->pres;
-	tail->next = NULL;
+	gotoPos(tail->getX() , tail->getY());
+	cout<<" ";
+	tail = tail->getPres();
+	tail->setNext(NULL);
 	delete p;
 	p = 0;
 }
@@ -112,15 +134,15 @@ void Snake::gotoPos(int x,int y) {
 
 
 void Snake::print() {
-	for(SnakeBody *p = tail ; p != NULL ; ++p) {
-		gotoPos(p->x , p->y);
+	for(SnakeBody *p = head ; p != NULL ; p = p->getNext()) {
+		gotoPos(p->getX() , p->getY());
 		cout<<p->getBody();
 	}
 }
 
-void Snake::move() {
-	int x = head->x;
-	int y = head->y;
+bool Snake::move() {
+	int x = head->getX();
+	int y = head->getY();
 	switch(point) {
 		case U:
 			--y;
@@ -135,9 +157,37 @@ void Snake::move() {
 			++x;
 			break;
 		default:
-				break;
+			break;
 
 	}
-	addHead(x,y);
-	delTail();
+	if(x == map->RB || x == map->LB || y == map->UB || y == map->DB) {
+		failed();
+		return false;
+	}
+	else {
+		addHead(x,y);
+		delTail();
+		return true;
+
+	}
+
+}
+
+void Snake::changePoint(char key) {
+	switch(key) {
+		case 'k': case 'K':
+			point = U;
+			break;
+		case 'j': case 'J':
+			point = D;
+			break;
+		case 'h': case 'H':
+			point = L;
+			break;
+		case 'L': case 'l':
+			point = R;
+			break;
+		default:
+			break;		
+	}
 }

@@ -15,17 +15,34 @@
  *
  * =====================================================================================
  */
-#include "Map.h"
 #include "Snake.h"
+#include "SnakeMap.h"
+#include <conio.h>
 int main(void) {
-	Map *map = new Map();
+	SnakeMap *map = new SnakeMap();
 	map->print();
-	Snake *snake =  new Snake();
+	char keydown;
+	Snake *snake =  new Snake(map);
+	snake->print();
 	while(true) {
-		snake->move();
-		snake->print();		
+		if(snake->move()) {
+			snake->print();
+			Sleep(200);
+			if(kbhit()) {
+				keydown = getch();
+				snake->changePoint(keydown);
+			}
+		}
+		else {
+			break;
+		}
+
 	}
+	delete snake;
+	snake = 0;
 	delete map;
 	map = 0;
+	system("PAUSE");
+	return 0;
 }
 
