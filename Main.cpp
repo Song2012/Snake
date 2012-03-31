@@ -16,16 +16,17 @@
  * =====================================================================================
  */
 #include "Snake.h"
-#include "SnakeMap.h"
 #include <conio.h>
 int main(void) {
 	SnakeMap *map = new SnakeMap();
+	Food *food = new Food(map);
 	map->print();
 	char keydown;
-	Snake *snake =  new Snake(map);
+	Snake *snake =  new Snake(map,food);
 	snake->print();
 	while(true) {
 		if(snake->move()) {
+			food->createFood();
 			snake->print();
 			Sleep(200);
 			if(kbhit()) {
@@ -38,6 +39,8 @@ int main(void) {
 		}
 
 	}
+	delete food;
+	food = 0;
 	delete snake;
 	snake = 0;
 	delete map;

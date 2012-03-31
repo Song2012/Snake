@@ -17,8 +17,9 @@
  */
 #ifndef __SNAKE_H__
 #define __SNAKE_H__
-#include <windows.h>
+#include "tool.h"
 #include "SnakeMap.h"
+#include "Food.h"
 #include <string>
 #include <iostream>
 using namespace std;
@@ -46,7 +47,7 @@ class SnakeBody {
 
 class Snake {
 	public:
-		Snake(SnakeMap *map);
+		Snake(SnakeMap *map , Food *food);
 		~Snake();
 		void addHead(int x , int y
 				, string body);
@@ -59,8 +60,8 @@ class Snake {
 		SnakeBody *head;
 		SnakeBody *tail;
 		SnakeMap *map;
+		Food *food;
 		enum {U,D,L,R} point;
-		void gotoPos(int x , int y);
 		inline void failed() {
 			system("cls");
 			cout<<"you are failed!"<<endl;

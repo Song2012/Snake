@@ -68,13 +68,14 @@ void SnakeBody::setY(int y) {
 }
 
 
-Snake::Snake(SnakeMap *map) {
+Snake::Snake(SnakeMap *map , Food *food) {
 	head = tail = NULL;
 	addHead(4,5);
 	addHead(4,6);
 	addHead(4,7);
 	point = R;
 	this->map = map;
+	this->food = food;
 }
 
 Snake::~Snake() {
@@ -123,16 +124,6 @@ void Snake::delTail() {
 	p = 0;
 }
 
-void Snake::gotoPos(int x,int y) {
-	HANDLE hOutput;  //定义一个句柄
-	COORD loc;  //定义一个结构体，包含坐标X, Y
-	loc.X = x;
-	loc.Y = y;
-	hOutput = GetStdHandle(STD_OUTPUT_HANDLE);  //得到标准输出设备的句柄
-	SetConsoleCursorPosition(hOutput, loc);  //设置控制台的光标坐标为loc
-}
-
-
 void Snake::print() {
 	for(SnakeBody *p = head ; p != NULL ; p = p->getNext()) {
 		gotoPos(p->getX() , p->getY());
@@ -164,11 +155,16 @@ bool Snake::move() {
 		failed();
 		return false;
 	}
+	else if(x == food->getX() && y == food->getY()) {
+
+		addHead(x,y);
+		food->setAte(true);
+		return true;
+	}
 	else {
 		addHead(x,y);
 		delTail();
 		return true;
-
 	}
 
 }
